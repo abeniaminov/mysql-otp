@@ -904,8 +904,8 @@ handle_query_call_reply([Rec|Recs], Query, #state{monitors = Monitors} = State, 
         #ok{} ->
             handle_query_call_reply(Recs, Query, State, ResultSetsAcc);
         #resultset{cols = ColDefs, rows = Rows} ->
-            Names = [Def#col.name || Def <- ColDefs],
-            ResultSetsAcc1 = [{Names, Rows} | ResultSetsAcc],
+            %Names = [Def#col.name || Def <- ColDefs],
+            ResultSetsAcc1 = [{ColDefs, Rows} | ResultSetsAcc],
             handle_query_call_reply(Recs, Query, State, ResultSetsAcc1);
         #error{code = ?ERROR_DEADLOCK} when State#state.transaction_level > 0 ->
             %% These errors result in an implicit rollback.
