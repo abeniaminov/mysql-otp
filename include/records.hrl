@@ -45,7 +45,7 @@
 -record(eof, {status, warning_count}).
 
 %% Column definition, used while parsing a result set.
--record(col, {name, type, charset, length, decimals, flags}).
+-record(col, {name, table, org_table, type, charset, length, decimals, flags}).
 
 %% A resultset. The rows can be either lists of terms or unparsed binaries as
 %% received from the server using either the text protocol or the binary

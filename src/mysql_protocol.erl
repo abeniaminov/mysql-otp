@@ -495,8 +495,8 @@ fetch_resultset_rows(SockModule, Socket, SeqNum, Acc) ->
 parse_column_definition(Data) ->
     {<<"def">>, Rest1} = lenenc_str(Data),   %% catalog (always "def")
     {_Schema, Rest2} = lenenc_str(Rest1),    %% schema-name
-    {_Table, Rest3} = lenenc_str(Rest2),     %% virtual table-name
-    {_OrgTable, Rest4} = lenenc_str(Rest3),  %% physical table-name
+    {Table, Rest3} = lenenc_str(Rest2),     %% virtual table-name
+    {OrgTable, Rest4} = lenenc_str(Rest3),  %% physical table-name
     {Name, Rest5} = lenenc_str(Rest4),       %% virtual column name
     {_OrgName, Rest6} = lenenc_str(Rest5),   %% physical column name
     {16#0c, Rest7} = lenenc_int(Rest6),      %% length of the following fields
@@ -513,7 +513,7 @@ parse_column_definition(Data) ->
     %%   default values: lenenc_str
     %% }
     <<>> = Rest8,
-    #col{name = Name, type = Type, charset = Charset, length = Length,
+    #col{name = Name,table = Table, org_table = OrgTable, type = Type, charset = Charset, length = Length,
          decimals = Decimals, flags = Flags}.
 
 %% -- text protocol --
